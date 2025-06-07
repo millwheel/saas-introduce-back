@@ -24,8 +24,12 @@ class Product(
 
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    val topic: Topic
+    @ManyToMany
+    @JoinTable(
+        name = "product_topic",
+        joinColumns = [JoinColumn(name = "product_id")],
+        inverseJoinColumns = [JoinColumn(name = "topic_id")]
+    )
+    val topics: MutableSet<Topic> = mutableSetOf()
 
 )

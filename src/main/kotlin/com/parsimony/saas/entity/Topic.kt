@@ -14,6 +14,9 @@ class Topic(
 
     var name: String,
 
+    @ManyToMany(mappedBy = "topics")
+    val products: MutableSet<Product> = mutableSetOf()
+
 ) {
     constructor(request: CategoryRequest): this (
         slug = request.slug,
