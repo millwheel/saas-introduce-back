@@ -9,6 +9,8 @@ class Category(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    val slug: String,
+
     val name: String,
 
 )

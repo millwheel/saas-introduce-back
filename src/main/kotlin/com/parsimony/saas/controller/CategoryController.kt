@@ -1,5 +1,6 @@
 package com.parsimony.saas.controller
 
+import com.parsimony.saas.service.CategoryService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/categories")
-class CategoryController {
+class CategoryController (
+    private val categoryService: CategoryService
+){
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
