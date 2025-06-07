@@ -4,7 +4,6 @@ import com.parsimony.saas.dto.product.ProductRequest
 import com.parsimony.saas.entity.ReactionType
 import com.parsimony.saas.service.ProductReactionService
 import com.parsimony.saas.service.ProductService
-import org.hibernate.usertype.UserType
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -76,9 +75,9 @@ class ProductController (
     @ResponseStatus(HttpStatus.CREATED)
     fun deleteReaction(
         @PathVariable slug: String,
+        @RequestAttribute userId: String
     ) {
-        // TODO: 좋아요/싫어요 생성 또는 수정 구현
-        TODO("구현 필요")
+        productReactionService.deleteReaction(slug, userId)
     }
 
 }
