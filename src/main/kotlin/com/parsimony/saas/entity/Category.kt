@@ -1,5 +1,6 @@
 package com.parsimony.saas.entity
 
+import com.parsimony.saas.dto.category.CategoryCreateRequest
 import jakarta.persistence.*
 
 @Entity
@@ -13,4 +14,9 @@ class Category(
 
     val name: String,
 
-)
+) {
+    constructor(request: CategoryCreateRequest): this (
+        slug = request.slug,
+        name = request.name
+    )
+}

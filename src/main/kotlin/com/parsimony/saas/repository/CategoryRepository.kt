@@ -7,4 +7,6 @@ import java.util.Optional
 interface CategoryRepository : JpaRepository<Category, Long> {
 
     fun findBySlug(slug: String): Optional<Category>
+    fun existsBySlug(slug: String): Boolean
+    fun existsByName(name: String): Boolean
 }
