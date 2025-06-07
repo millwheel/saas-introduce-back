@@ -1,6 +1,6 @@
 package com.parsimony.saas.service
 
-import com.parsimony.saas.dto.category.CategoryRequest
+import com.parsimony.saas.dto.category.TopicRequest
 import com.parsimony.saas.entity.Topic
 import com.parsimony.saas.excetion.ConflictException
 import com.parsimony.saas.repository.TopicRepository
@@ -21,28 +21,29 @@ class TopicService (
     fun getTopic(slug: String): Topic {
         return topicRepository.findBySlug(slug)
             .orThrowNotFound("Category", "slug", slug)
+        // TODO topic에 연결된 Product 정보를 돌려줘야함
     }
 
     @Transactional
-    fun createTopic(categoryRequest: CategoryRequest) {
-        validateRequest(categoryRequest)
-        val topic = Topic(categoryRequest)
+    fun createTopic(topicRequest: TopicRequest) {
+        validateRequest(topicRequest)
+        val topic = Topic(topicRequest)
         topicRepository.save(topic)
     }
 
     @Transactional
-    fun updateTopic(slug: String, categoryRequest: CategoryRequest) {
+    fun updateTopic(slug: String, topicRequest: TopicRequest) {
         val category = topicRepository.findBySlug(slug)
             .orThrowNotFound("Category", "slug", slug)
-        validateRequest(categoryRequest)
-        category.update(categoryRequest)
+        validateRequest(topicRequest)
+        category.update(topicRequest)
     }
 
-    private fun validateRequest(categoryRequest: CategoryRequest) {
-        if (topicRepository.existsBySlug(categoryRequest.slug)) {
+    private fun validateRequest(topicRequest: TopicRequest) {
+        if (topicRepository.existsBySlug(topicRequest.slug)) {
             throw ConflictException("category slug already used")
         }
-        if (topicRepository.existsByName(categoryRequest.name)) {
+        if (topicRepository.existsByName(topicRequest.name)) {
             throw ConflictException("category name already used")
         }
     }

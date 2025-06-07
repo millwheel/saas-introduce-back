@@ -1,6 +1,6 @@
 package com.parsimony.saas.entity
 
-import com.parsimony.saas.dto.category.CategoryRequest
+import com.parsimony.saas.dto.category.TopicRequest
 import jakarta.persistence.*
 
 @Entity
@@ -18,12 +18,12 @@ class Topic(
     val products: MutableSet<Product> = mutableSetOf()
 
 ) {
-    constructor(request: CategoryRequest): this (
+    constructor(request: TopicRequest): this (
         slug = request.slug,
         name = request.name
     )
 
-    fun update(request: CategoryRequest) {
+    fun update(request: TopicRequest) {
         slug = request.slug
         name = request.name
     }

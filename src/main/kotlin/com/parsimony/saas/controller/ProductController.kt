@@ -19,19 +19,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/products")
 class ProductController {
 
-    @GetMapping
+    @GetMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
-    fun getProducts(
-        @RequestParam(defaultValue = "0") @Min(0) page: Int,
-        @RequestParam(defaultValue = "10") @Min(1) size: Int,
-        @RequestParam(required = false) categoryId: Long?
-    ) {
-        // TODO: product 목록 조회 기능 구현
-    }
-
-    @GetMapping("/{productId}")
-    @ResponseStatus(HttpStatus.OK)
-    fun getProduct(@PathVariable productId: Long) {
+    fun getProduct(@PathVariable slug: String) {
         // TODO: 특정 Product 상세 조회 구현
         // TODO: 최근 30일 조회수까지 읽어오기 구현
         // TODO: 읽고 나서 비동기적으로 조회수 1 증가시키도록 구현하기

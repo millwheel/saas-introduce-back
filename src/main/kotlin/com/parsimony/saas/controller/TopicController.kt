@@ -1,6 +1,7 @@
 package com.parsimony.saas.controller
 
-import com.parsimony.saas.dto.category.CategoryRequest
+import com.parsimony.saas.dto.category.TopicRequest
+import com.parsimony.saas.dto.category.TopicResponse
 import com.parsimony.saas.service.TopicService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,13 +21,14 @@ class TopicController (
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getTopics() {
-        val categories = topicService.getTopics()
+    fun getTopics() : List<TopicResponse> {
+        val topics = topicService.getTopics()
+        return topics.map { TopicResponse(it) }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createTopic(@RequestBody request: CategoryRequest) {
+    fun createTopic(@RequestBody request: TopicRequest) {
         topicService.createTopic(request)
     }
 
@@ -34,7 +36,7 @@ class TopicController (
     @ResponseStatus(HttpStatus.OK)
     fun updateTopic(
         @PathVariable slug: String,
-        @RequestBody request: CategoryRequest
+        @RequestBody request: TopicRequest
     ) {
         topicService.updateTopic(slug, request)
     }
