@@ -1,6 +1,6 @@
 package com.parsimony.saas.dto.category
 
-data class CategoryCreateRequest (
+data class CategoryRequest (
     val name: String,
     val slug: String
 )
