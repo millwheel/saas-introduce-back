@@ -1,5 +1,6 @@
 package com.parsimony.saas.entity
 
+import com.parsimony.saas.dto.product.ProductRequest
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -10,19 +11,21 @@ class Product(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    val slug: String,
+    @Column(nullable = false, unique = true)
+    var slug: String,
 
-    val name: String,
+    @Column(nullable = false, unique = true)
+    var name: String,
 
-    val summary: String,
+    var summary: String,
 
-    val description: String,
+    var description: String,
 
-    val websiteUrl: String,
-
-    val logoUrl: String,
+    var websiteUrl: String,
 
     val createdAt: LocalDateTime = LocalDateTime.now(),
+
+    var updatedAt: LocalDateTime = LocalDateTime.now(),
 
     @ManyToMany
     @JoinTable(
@@ -32,4 +35,21 @@ class Product(
     )
     val topics: MutableSet<Topic> = mutableSetOf()
 
-)
+) {
+    constructor(productRequest: ProductRequest): this (
+        slug = productRequest.slug,
+        name = productRequest.name,
+        summary = productRequest.summary,
+        description = productRequest.description,
+        websiteUrl = productRequest.websiteUrl
+    )
+
+    fun update(productRequest: ProductRequest) {
+        slug = productRequest.slug
+        name = productRequest.name
+        summary = productRequest.summary
+        description = productRequest.description
+        websiteUrl = productRequest.websiteUrl
+        updatedAt = LocalDateTime.now()
+    }
+}

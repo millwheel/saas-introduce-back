@@ -1,8 +1,7 @@
 package com.parsimony.saas.controller
 
-import jakarta.validation.constraints.Min
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
+import com.parsimony.saas.dto.product.ProductRequest
+import com.parsimony.saas.service.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,13 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/products")
-class ProductController {
+class ProductController (
+    private val productService: ProductService
+) {
 
     @GetMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
@@ -29,22 +29,24 @@ class ProductController {
     }
 
     @PostMapping
-    fun createProduct() {
-        // TODO: Product 등록 구현 (권한 체크: 관리자/에디터용)
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createProduct(@RequestBody productRequest: ProductRequest) {
+        productService.createProduct(productRequest)
     }
 
-    @PutMapping("/{productId}")
+    @PutMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
     fun updateProduct(
-        @PathVariable productId: Long
+        @PathVariable slug: String,
+        @RequestBody productRequest: ProductRequest
     ){
-        // TODO: Product 정보 수정 구현
+        productService.updateProduct(slug, productRequest)
     }
 
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
-    fun deleteProduct(@PathVariable productId: Long) {
-        // TODO: Product 삭제 구현
+    fun deleteProduct(@PathVariable slug: String,) {
+        productService.deleteProduct(slug)
     }
 
     @PostMapping("/{productId}/reactions")

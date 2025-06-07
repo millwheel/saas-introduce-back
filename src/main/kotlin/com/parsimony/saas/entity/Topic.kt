@@ -10,8 +10,10 @@ class Topic(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    @Column(nullable = false, unique = true)
     var slug: String,
 
+    @Column(nullable = false, unique = true)
     var name: String,
 
     @ManyToMany(mappedBy = "topics")
