@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 
 @Entity
-class SaasViewStat(
+class SaasViewRecord(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
