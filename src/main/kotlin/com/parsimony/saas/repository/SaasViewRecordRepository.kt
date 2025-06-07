@@ -1,7 +1,7 @@
 package com.parsimony.saas.repository
 
-import com.parsimony.saas.entity.SaasViewRecord
+import com.parsimony.saas.entity.ProductViewRecord
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface SaasViewRecordRepository : JpaRepository<SaasViewRecord, Long> {
+interface SaasViewRecordRepository : JpaRepository<ProductViewRecord, Long> {
 }

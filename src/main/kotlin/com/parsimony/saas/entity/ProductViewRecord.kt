@@ -3,8 +3,9 @@ package com.parsimony.saas.entity
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+
 @Entity
-class SaasReaction(
+class ProductViewRecord(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,14 +13,13 @@ class SaasReaction(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "saas_id")
-    val saas: Saas,
+    val product: Product,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    val user: User,
+    val userId: Long?,
 
-    @Enumerated(EnumType.STRING)
-    val reactionType: ReactionType,
+    val ipAddress: String,
 
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val userAgent: String,
+
+    val viewedAt: LocalDateTime = LocalDateTime.now()
 )
