@@ -2,11 +2,12 @@ package com.parsimony.saas.entity
 
 import jakarta.persistence.*
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Entity
 class User(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    @Id
+    val id: String = UUID.randomUUID().toString(),
 
     val email: String,
     val nickname: String,
@@ -14,5 +15,5 @@ class User(
     @Enumerated(EnumType.STRING)
     val role: UserRole,
 
-    val joinedAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now()
 )

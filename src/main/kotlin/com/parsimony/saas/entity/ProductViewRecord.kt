@@ -12,7 +12,7 @@ class ProductViewRecord(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "saas_id")
+    @JoinColumn(name = "product_id")
     val product: Product,
 
     val userId: Long?,

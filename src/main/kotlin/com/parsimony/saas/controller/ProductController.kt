@@ -1,13 +1,17 @@
 package com.parsimony.saas.controller
 
 import com.parsimony.saas.dto.product.ProductRequest
+import com.parsimony.saas.entity.ReactionType
+import com.parsimony.saas.service.ProductReactionService
 import com.parsimony.saas.service.ProductService
+import org.hibernate.usertype.UserType
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestAttribute
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -16,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/products")
 class ProductController (
-    private val productService: ProductService
+    private val productService: ProductService,
+    private val productReactionService: ProductReactionService
 ) {
 
     @GetMapping("/{slug}")
@@ -49,19 +54,28 @@ class ProductController (
         productService.deleteProduct(slug)
     }
 
-    @PostMapping("/{productId}/reactions")
+    @PostMapping("/{slug}/like")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createReaction(
-        @PathVariable productId: Long,
+    fun createLikeReaction(
+        @PathVariable slug: String,
+        @RequestAttribute userId: String
     ) {
-        // TODO: 좋아요/싫어요 생성 또는 수정 구현
-        TODO("구현 필요")
+        productReactionService.createReaction(slug, userId, ReactionType.LIKE)
     }
 
-    @DeleteMapping("/{productId}/reactions")
+    @PostMapping("/{slug}/dislike")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createHateReaction(
+        @PathVariable slug: String,
+        @RequestAttribute userId: String
+    ) {
+        productReactionService.createReaction(slug, userId, ReactionType.DISLIKE)
+    }
+
+    @DeleteMapping("/{slug}/reactions")
     @ResponseStatus(HttpStatus.CREATED)
     fun deleteReaction(
-        @PathVariable productId: Long,
+        @PathVariable slug: String,
     ) {
         // TODO: 좋아요/싫어요 생성 또는 수정 구현
         TODO("구현 필요")

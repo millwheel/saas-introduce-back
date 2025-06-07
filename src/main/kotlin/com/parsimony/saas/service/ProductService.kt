@@ -6,7 +6,6 @@ import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.util.orThrowNotFound
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.bind.annotation.PathVariable
 
 @Service
 @Transactional(readOnly = true)
