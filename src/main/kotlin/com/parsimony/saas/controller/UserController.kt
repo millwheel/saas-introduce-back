@@ -18,10 +18,10 @@ class UserController(
         TODO("구현 필요")
     }
 
-    @GetMapping("/me/liked-products")
+    @GetMapping("/me/reactions")
     @ResponseStatus(HttpStatus.OK)
-    fun getMyLikedProducts() {
-        // TODO: 내가 좋아요한 Product 목록 구현
+    fun getMyReactions() {
+        // TODO: 내가 반응한 Product 목록 조회 구현 (필터: LIKE/DISLIKE)
         TODO("구현 필요")
     }
 }
