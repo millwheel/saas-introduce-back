@@ -11,8 +11,8 @@ import jakarta.persistence.Table
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "product_view_stats")
-class ProductViewStats(
+@Table(name = "product_view_statistic")
+class ProductViewStatistic(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,11 @@ class ProductViewStats(
     @JoinColumn(name = "product_id")
     val product: Product,
 
-    var totalViews: Long = 0,
-    var last7DaysViews: Long = 0,
-    var last30DaysViews: Long = 0,
+    var totalViews: Int = 0,
+
+    var last7DaysViews: Int = 0,
+
+    var last30DaysViews: Int = 0,
 
     var updatedAt: LocalDateTime = LocalDateTime.now()
 
@@ -34,7 +36,7 @@ class ProductViewStats(
         updatedAt = LocalDateTime.now()
     }
 
-    fun updatePeriodViews(last7Days: Long, last30Days: Long) {
+    fun updatePeriodViews(last7Days: Int, last30Days: Int) {
         last7DaysViews = last7Days
         last30DaysViews = last30Days
         updatedAt = LocalDateTime.now()

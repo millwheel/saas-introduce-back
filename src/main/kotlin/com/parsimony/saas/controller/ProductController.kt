@@ -38,7 +38,8 @@ class ProductController (
         val userAgent = getUserAgent(httpServletRequest)
         val product = productService.getProduct(slug)
         productViewService.saveView(product, userId, ipAddress, userAgent)
-        return ProductResponse(product)
+        val productViewStatistic = productViewService.getProductViewStatistic(product)
+        return ProductResponse(product, productViewStatistic)
     }
 
     @PostMapping

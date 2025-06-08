@@ -2,9 +2,9 @@ package com.parsimony.saas.service
 
 import com.parsimony.saas.entity.Product
 import com.parsimony.saas.entity.ProductViewLog
-import com.parsimony.saas.entity.ProductViewStats
+import com.parsimony.saas.entity.ProductViewStatistic
 import com.parsimony.saas.repository.ProductViewLogRepository
-import com.parsimony.saas.repository.ProductViewStatsRepository
+import com.parsimony.saas.repository.ProductViewStatisticRepository
 import com.parsimony.saas.util.orThrowNotFound
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Async
@@ -18,10 +18,24 @@ private val logger = KotlinLogging.logger {}
 @Transactional(readOnly = true)
 class ProductViewService (
     private val productViewLogRepository: ProductViewLogRepository,
-    private val productViewStatsRepository: ProductViewStatsRepository
+    private val productViewStatisticRepository: ProductViewStatisticRepository
 ) {
 
-    @Async
+    fun getProductViewStatistic(product: Product): ProductViewStatistic {
+        return productViewStatisticRepository.findByProduct(product)
+            .orThrowNotFound("statistic", "productId", product.id)
+    }
+
+    fun getTop3ByLast7Days(): List<Product> {
+        return productViewStatisticRepository.findTop3ByLast7Days()
+            .map { it.product }
+    }
+
+    fun getTop3ByLast30Days(): List<Product> {
+        return productViewStatisticRepository.findTop3ByLast30Days()
+            .map { it.product }
+    }
+
     @Transactional
     fun saveView(product: Product, userId: String?, ipAddress: String, userAgent: String) {
         try {
@@ -33,7 +47,7 @@ class ProductViewService (
             )
             productViewLogRepository.save(viewLog)
 
-            val stats = productViewStatsRepository.findByProduct(product)
+            val stats = productViewStatisticRepository.findByProduct(product)
                 .orThrowNotFound("stats", "productId", product.id)
             stats.incrementTotalViews()
 
@@ -41,5 +55,6 @@ class ProductViewService (
             logger.error { "exception: ${e.message}" }
         }
     }
+
 
 }
