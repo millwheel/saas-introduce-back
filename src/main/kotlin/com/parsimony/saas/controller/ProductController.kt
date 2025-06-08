@@ -34,8 +34,9 @@ class ProductController (
                    httpServletRequest: HttpServletRequest): ProductResponse {
         val ipAddress = getClientIpAddress(httpServletRequest)
         val userAgent = getUserAgent(httpServletRequest)
-        val product = productService.getProduct(slug, userId, ipAddress, userAgent)
-        return  ProductResponse(product)
+        val product = productService.getProduct(slug)
+        productService.saveView(product, userId, ipAddress, userAgent)
+        return ProductResponse(product)
     }
 
     @PostMapping
@@ -55,7 +56,7 @@ class ProductController (
 
     @DeleteMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
-    fun deleteProduct(@PathVariable slug: String,) {
+    fun deleteProduct(@PathVariable slug: String) {
         productService.deleteProduct(slug)
     }
 

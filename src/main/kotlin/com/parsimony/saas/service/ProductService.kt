@@ -6,10 +6,11 @@ import com.parsimony.saas.entity.ProductViewLog
 import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.ProductViewLogRepository
 import com.parsimony.saas.util.orThrowNotFound
-import jakarta.servlet.http.HttpServletRequest
+import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
+private val logger = KotlinLogging.logger {}
 @Service
 @Transactional(readOnly = true)
 class ProductService (
@@ -17,17 +18,25 @@ class ProductService (
     private val productViewLogRepository: ProductViewLogRepository
 ) {
 
-    fun getProduct(slug: String, userId: String, ipAddress: String, userAgent: String): Product {
-        val product = productRepository.findBySlug(slug)
+    fun getProduct(slug: String): Product {
+        return productRepository.findBySlug(slug)
             .orThrowNotFound("product", "slug", slug)
-        val viewLog = ProductViewLog(
-            product = product,
-            userId = userId,
-            ipAddress = ipAddress,
-            userAgent = userAgent
-        )
-        productViewLogRepository.save(viewLog)
-        return product
+    }
+
+    @Async
+    @Transactional
+    fun saveView(product: Product, userId: String?, ipAddress: String, userAgent: String) {
+        try {
+            val viewLog = ProductViewLog(
+                product = product,
+                userId = userId,
+                ipAddress = ipAddress,
+                userAgent = userAgent
+            )
+            productViewLogRepository.save(viewLog)
+        } catch (e: Exception) {
+            logger.error { "Failed to save product view log for product: ${product.slug}, exception: ${e.message}" }
+        }
     }
 
     @Transactional
@@ -39,8 +48,9 @@ class ProductService (
 
     @Transactional
     fun updateProduct(slug: String, productRequest: ProductRequest) {
-        productRepository.findBySlug(slug)
+        val product = productRepository.findBySlug(slug)
             .orThrowNotFound("product", "slug", slug)
+        product.update(productRequest)
     }
 
     @Transactional
