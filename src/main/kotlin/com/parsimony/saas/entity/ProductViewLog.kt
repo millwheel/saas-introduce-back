@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 
 @Entity
-class ProductViewRecord(
+class ProductViewLog(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +15,13 @@ class ProductViewRecord(
     @JoinColumn(name = "product_id")
     val product: Product,
 
-    val userId: Long?,
+    val userId: String?,
 
     val ipAddress: String,
 
     val userAgent: String,
 
     val viewedAt: LocalDateTime = LocalDateTime.now()
-)
+) {
+
+}

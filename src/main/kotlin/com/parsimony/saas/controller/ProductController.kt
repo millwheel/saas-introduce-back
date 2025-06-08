@@ -5,6 +5,9 @@ import com.parsimony.saas.dto.product.ProductResponse
 import com.parsimony.saas.entity.ReactionType
 import com.parsimony.saas.service.ProductReactionService
 import com.parsimony.saas.service.ProductService
+import com.parsimony.saas.util.getClientIpAddress
+import com.parsimony.saas.util.getUserAgent
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -26,9 +29,12 @@ class ProductController (
 
     @GetMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
-    fun getProduct(@PathVariable slug: String): ProductResponse {
-        val product = productService.getProduct(slug)
-        // TODO: 읽고 나서 비동기적으로 조회수 1 증가시키도록 구현하기
+    fun getProduct(@PathVariable slug: String,
+                   @RequestAttribute userId: String,
+                   httpServletRequest: HttpServletRequest): ProductResponse {
+        val ipAddress = getClientIpAddress(httpServletRequest)
+        val userAgent = getUserAgent(httpServletRequest)
+        val product = productService.getProduct(slug, userId, ipAddress, userAgent)
         return  ProductResponse(product)
     }
 
