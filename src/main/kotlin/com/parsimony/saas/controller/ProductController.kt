@@ -74,7 +74,7 @@ class ProductController (
 
     @PostMapping("/{slug}/dislike")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createHateReaction(
+    fun createDislikeReaction(
         @PathVariable slug: String,
         @RequestAttribute userId: String
     ) {
