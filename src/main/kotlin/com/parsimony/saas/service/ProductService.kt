@@ -10,7 +10,9 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+
 private val logger = KotlinLogging.logger {}
+
 @Service
 @Transactional(readOnly = true)
 class ProductService (
@@ -35,7 +37,7 @@ class ProductService (
             )
             productViewLogRepository.save(viewLog)
         } catch (e: Exception) {
-            logger.error { "Failed to save product view log for product: ${product.slug}, exception: ${e.message}" }
+            logger.error { "exception: ${e.message}" }
         }
     }
 
