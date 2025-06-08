@@ -5,6 +5,7 @@ import com.parsimony.saas.dto.product.ProductResponse
 import com.parsimony.saas.entity.ReactionType
 import com.parsimony.saas.service.ProductReactionService
 import com.parsimony.saas.service.ProductService
+import com.parsimony.saas.service.ProductViewService
 import com.parsimony.saas.util.getClientIpAddress
 import com.parsimony.saas.util.getUserAgent
 import jakarta.servlet.http.HttpServletRequest
@@ -24,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/products")
 class ProductController (
     private val productService: ProductService,
-    private val productReactionService: ProductReactionService
+    private val productReactionService: ProductReactionService,
+    private val productViewService: ProductViewService
 ) {
 
     @GetMapping("/{slug}")
@@ -35,7 +37,7 @@ class ProductController (
         val ipAddress = getClientIpAddress(httpServletRequest)
         val userAgent = getUserAgent(httpServletRequest)
         val product = productService.getProduct(slug)
-        productService.saveView(product, userId, ipAddress, userAgent)
+        productViewService.saveView(product, userId, ipAddress, userAgent)
         return ProductResponse(product)
     }
 
