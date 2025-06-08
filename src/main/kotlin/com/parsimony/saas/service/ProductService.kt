@@ -13,6 +13,11 @@ class ProductService (
     private val productRepository: ProductRepository,
 ) {
 
+    fun getProduct(slug: String): Product {
+        return productRepository.findBySlug(slug)
+            .orThrowNotFound("product", "slug", slug)
+    }
+
     @Transactional
     fun createProduct(productRequest: ProductRequest) {
         val product = Product(productRequest)

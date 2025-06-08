@@ -1,6 +1,7 @@
 package com.parsimony.saas.controller
 
 import com.parsimony.saas.dto.product.ProductRequest
+import com.parsimony.saas.dto.product.ProductResponse
 import com.parsimony.saas.entity.ReactionType
 import com.parsimony.saas.service.ProductReactionService
 import com.parsimony.saas.service.ProductService
@@ -25,11 +26,10 @@ class ProductController (
 
     @GetMapping("/{slug}")
     @ResponseStatus(HttpStatus.OK)
-    fun getProduct(@PathVariable slug: String) {
-        // TODO: 특정 Product 상세 조회 구현
-        // TODO: 최근 30일 조회수까지 읽어오기 구현
+    fun getProduct(@PathVariable slug: String): ProductResponse {
+        val product = productService.getProduct(slug)
         // TODO: 읽고 나서 비동기적으로 조회수 1 증가시키도록 구현하기
-        TODO("구현 필요")
+        return  ProductResponse(product)
     }
 
     @PostMapping
