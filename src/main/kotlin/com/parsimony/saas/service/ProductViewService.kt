@@ -6,6 +6,7 @@ import com.parsimony.saas.entity.ProductViewStatistic
 import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.ProductViewLogRepository
 import com.parsimony.saas.repository.ProductViewStatisticRepository
+import com.parsimony.saas.util.errorWithLocation
 import com.parsimony.saas.util.orThrowNotFound
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Async
@@ -57,7 +58,7 @@ class ProductViewService (
             stats.incrementTotalViews()
 
         } catch (e: Exception) {
-            logger.error(e) { "Failed to update view" }
+            logger.errorWithLocation("Failed to update view", e)
         }
     }
 
@@ -86,7 +87,7 @@ class ProductViewService (
 
             logger.info { "Successfully updated period view stats for ${allProducts.size} products" }
         } catch (e: Exception) {
-            logger.error(e) { "Failed to update period view stats" }
+            logger.errorWithLocation("Failed to update period view statistic", e)
         }
     }
 
