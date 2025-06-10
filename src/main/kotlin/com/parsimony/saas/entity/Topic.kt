@@ -16,17 +16,22 @@ class Topic(
     @Column(nullable = false, unique = true)
     var name: String,
 
+    @Column(length = 10)
+    var emoji: String,
+
     @ManyToMany(mappedBy = "topics")
     val products: MutableSet<Product> = mutableSetOf()
 
 ) {
     constructor(request: TopicRequest): this (
         slug = request.slug,
-        name = request.name
+        name = request.name,
+        emoji = request.emoji
     )
 
     fun update(request: TopicRequest) {
         slug = request.slug
         name = request.name
+        emoji = request.emoji
     }
 }
