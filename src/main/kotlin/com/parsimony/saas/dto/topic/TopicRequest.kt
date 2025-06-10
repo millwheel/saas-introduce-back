@@ -1,4 +1,4 @@
-package com.parsimony.saas.dto.category
+package com.parsimony.saas.dto.topic
 
 data class TopicRequest (
     val name: String,

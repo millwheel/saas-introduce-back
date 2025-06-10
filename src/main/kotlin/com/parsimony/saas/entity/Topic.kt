@@ -1,6 +1,6 @@
 package com.parsimony.saas.entity
 
-import com.parsimony.saas.dto.category.TopicRequest
+import com.parsimony.saas.dto.topic.TopicRequest
 import jakarta.persistence.*
 
 @Entity
@@ -19,7 +19,7 @@ class Topic(
     @Column(length = 10)
     var emoji: String,
 
-    @ManyToMany(mappedBy = "topics")
+    @ManyToMany(mappedBy = "topics", fetch = FetchType.LAZY)
     val products: MutableSet<Product> = mutableSetOf()
 
 ) {

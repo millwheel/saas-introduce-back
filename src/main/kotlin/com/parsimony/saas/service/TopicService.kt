@@ -1,7 +1,8 @@
 package com.parsimony.saas.service
 
-import com.parsimony.saas.dto.category.TopicRequest
+import com.parsimony.saas.dto.topic.TopicRequest
 import com.parsimony.saas.entity.Topic
+import com.parsimony.saas.entity.TopicQueryModel
 import com.parsimony.saas.excetion.ConflictException
 import com.parsimony.saas.repository.TopicRepository
 import com.parsimony.saas.util.orThrowNotFound
@@ -14,8 +15,8 @@ class TopicService (
     private val topicRepository: TopicRepository
 ){
 
-    fun getTopics() : List<Topic> {
-        return topicRepository.findAll();
+    fun getTopics() : List<TopicQueryModel> {
+        return topicRepository.findAllQueryModel();
     }
 
     fun getTopic(slug: String): Topic {

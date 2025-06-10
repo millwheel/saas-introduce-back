@@ -1,7 +1,7 @@
 package com.parsimony.saas.controller
 
-import com.parsimony.saas.dto.category.TopicRequest
-import com.parsimony.saas.dto.category.TopicResponse
+import com.parsimony.saas.dto.topic.TopicRequest
+import com.parsimony.saas.dto.topic.TopicResponse
 import com.parsimony.saas.service.TopicService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
