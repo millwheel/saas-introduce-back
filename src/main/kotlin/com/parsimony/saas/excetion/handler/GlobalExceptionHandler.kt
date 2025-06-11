@@ -31,7 +31,7 @@ class GlobalExceptionHandler {
         return errorResult;
     }
 
-    @ExceptionHandler(DataNotFoundException::class)
+    @ExceptionHandler(ConflictException::class)
     @ResponseStatus(HttpStatus.CONFLICT)
     fun handleConflictException(ex: ConflictException, request: HttpServletRequest): ErrorResult {
         val errorResult = ErrorResult(HttpStatus.CONFLICT.value(), ex.message?: "Conflict", request.requestURI)

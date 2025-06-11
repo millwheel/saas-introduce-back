@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
+@Table(name = "user_entity")
 class User(
     @Id
     val id: String = UUID.randomUUID().toString(),

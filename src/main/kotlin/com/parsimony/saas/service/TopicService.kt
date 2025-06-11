@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class TopicService (
     private val topicRepository: TopicRepository,
-    private val productRepository: ProductRepository
 ){
 
     fun getTopics() : List<TopicQueryModel> {
