@@ -2,6 +2,7 @@ package com.parsimony.saas.controller
 
 import com.parsimony.saas.dto.topic.TopicRequest
 import com.parsimony.saas.dto.topic.TopicResponse
+import com.parsimony.saas.dto.topic.TopicSummaryResponse
 import com.parsimony.saas.service.TopicService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
@@ -21,9 +22,15 @@ class TopicController (
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    fun getTopics() : List<TopicResponse> {
+    fun getTopics() : List<TopicSummaryResponse> {
         val topics = topicService.getTopics()
-        return topics.map { TopicResponse(it) }
+        return topics.map { TopicSummaryResponse(it) }
+    }
+
+    @GetMapping("/{slug}")
+    @ResponseStatus(HttpStatus.OK)
+    fun getTopic(@PathVariable slug: String) : TopicResponse {
+        return topicService.getTopic(slug);
     }
 
     @PostMapping

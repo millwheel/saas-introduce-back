@@ -1,9 +1,11 @@
 package com.parsimony.saas.service
 
 import com.parsimony.saas.dto.topic.TopicRequest
+import com.parsimony.saas.dto.topic.TopicResponse
 import com.parsimony.saas.entity.Topic
 import com.parsimony.saas.entity.TopicQueryModel
 import com.parsimony.saas.excetion.ConflictException
+import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.TopicRepository
 import com.parsimony.saas.util.orThrowNotFound
 import org.springframework.stereotype.Service
@@ -12,17 +14,18 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class TopicService (
-    private val topicRepository: TopicRepository
+    private val topicRepository: TopicRepository,
+    private val productRepository: ProductRepository
 ){
 
     fun getTopics() : List<TopicQueryModel> {
         return topicRepository.findAllQueryModel();
     }
 
-    fun getTopic(slug: String): Topic {
-        return topicRepository.findBySlug(slug)
+    fun getTopic(slug: String): TopicResponse {
+        val topic = topicRepository.findBySlug(slug)
             .orThrowNotFound("Category", "slug", slug)
-        // TODO topic에 연결된 Product 정보를 돌려줘야함
+        return TopicResponse(topic, topic.products)
     }
 
     @Transactional
