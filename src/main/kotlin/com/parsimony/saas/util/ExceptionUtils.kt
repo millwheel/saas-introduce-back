@@ -1,6 +1,6 @@
 package com.parsimony.saas.util
 
-import com.parsimony.saas.excetion.DataNotFoundException
+import com.parsimony.saas.excetion.custom.DataNotFoundException
 import io.github.oshai.kotlinlogging.KLogger
 import java.util.Optional
 

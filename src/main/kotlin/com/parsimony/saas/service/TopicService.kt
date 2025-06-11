@@ -4,7 +4,8 @@ import com.parsimony.saas.dto.topic.TopicRequest
 import com.parsimony.saas.dto.topic.TopicResponse
 import com.parsimony.saas.entity.Topic
 import com.parsimony.saas.entity.TopicQueryModel
-import com.parsimony.saas.excetion.ConflictException
+import com.parsimony.saas.excetion.custom.ConflictException
+import com.parsimony.saas.excetion.custom.InvalidInputException
 import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.TopicRepository
 import com.parsimony.saas.util.orThrowNotFound
@@ -37,18 +38,21 @@ class TopicService (
 
     @Transactional
     fun updateTopic(slug: String, topicRequest: TopicRequest) {
-        val category = topicRepository.findBySlug(slug)
-            .orThrowNotFound("Category", "slug", slug)
+        val topic = topicRepository.findBySlug(slug)
+            .orThrowNotFound("topic", "slug", slug)
         validateRequest(topicRequest)
-        category.update(topicRequest)
+        topic.update(topicRequest)
     }
 
     private fun validateRequest(topicRequest: TopicRequest) {
+        if (!topicRequest.slug.startsWith("/")) {
+            throw InvalidInputException("slug should start with slash(/)")
+        }
         if (topicRepository.existsBySlug(topicRequest.slug)) {
-            throw ConflictException("category slug already used")
+            throw ConflictException("topic slug already used")
         }
         if (topicRepository.existsByName(topicRequest.name)) {
-            throw ConflictException("category name already used")
+            throw ConflictException("topic name already used")
         }
     }
 

@@ -2,7 +2,7 @@ package com.parsimony.saas.service
 
 import com.parsimony.saas.entity.ProductReaction
 import com.parsimony.saas.entity.ReactionType
-import com.parsimony.saas.excetion.ConflictException
+import com.parsimony.saas.excetion.custom.ConflictException
 import com.parsimony.saas.repository.ProductReactionRepository
 import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.UserRepository
