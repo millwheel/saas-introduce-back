@@ -22,3 +22,11 @@ fun KLogger.errorWithLocation(message: String, e: Exception) {
 
     this.error { "$message: ${e::class.simpleName}: ${e.message} $locationInfo" }
 }
+
+fun Throwable.rootCause(): Throwable {
+    var cause: Throwable = this
+    while (cause.cause != null && cause.cause !== cause) {
+        cause = cause.cause!!
+    }
+    return cause
+}
