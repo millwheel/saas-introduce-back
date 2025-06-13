@@ -6,7 +6,6 @@ import com.parsimony.saas.entity.Topic
 import com.parsimony.saas.entity.TopicQueryModel
 import com.parsimony.saas.excetion.custom.ConflictException
 import com.parsimony.saas.excetion.custom.InvalidInputException
-import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.TopicRepository
 import com.parsimony.saas.util.orThrowNotFound
 import org.springframework.stereotype.Service
@@ -22,10 +21,9 @@ class TopicService (
         return topicRepository.findAllQueryModel();
     }
 
-    fun getTopic(slug: String): TopicResponse {
-        val topic = topicRepository.findBySlug(slug)
-            .orThrowNotFound("Category", "slug", slug)
-        return TopicResponse(topic, topic.products)
+    fun getTopic(code: String): Topic {
+        return topicRepository.findByCode(code)
+            .orThrowNotFound("topic", "code", code)
     }
 
     @Transactional
@@ -36,23 +34,25 @@ class TopicService (
     }
 
     @Transactional
-    fun updateTopic(slug: String, topicRequest: TopicRequest) {
-        val topic = topicRepository.findBySlug(slug)
-            .orThrowNotFound("topic", "slug", slug)
+    fun updateTopic(topic: Topic, topicRequest: TopicRequest) {
         validateRequest(topicRequest)
         topic.update(topicRequest)
     }
 
     private fun validateRequest(topicRequest: TopicRequest) {
-        if (!topicRequest.slug.startsWith("/")) {
-            throw InvalidInputException("slug should start with slash(/)")
+        if (topicRequest.code.startsWith("/")) {
+            throw InvalidInputException("code should start without slash(/)")
         }
-        if (topicRepository.existsBySlug(topicRequest.slug)) {
-            throw ConflictException("topic slug already used")
+        if (topicRepository.existsByCode(topicRequest.code)) {
+            throw ConflictException("topic code already used")
         }
         if (topicRepository.existsByName(topicRequest.name)) {
             throw ConflictException("topic name already used")
         }
+    }
+
+    fun deleteTopic(topic: Topic) {
+        topicRepository.delete(topic)
     }
 
 }

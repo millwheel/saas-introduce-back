@@ -5,6 +5,7 @@ import com.parsimony.saas.dto.topic.TopicResponse
 import com.parsimony.saas.dto.topic.TopicSummaryResponse
 import com.parsimony.saas.service.TopicService
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -27,10 +28,11 @@ class TopicController (
         return topics.map { TopicSummaryResponse(it) }
     }
 
-    @GetMapping("/{slug}")
+    @GetMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
-    fun getTopic(@PathVariable slug: String) : TopicResponse {
-        return topicService.getTopic(slug);
+    fun getTopic(@PathVariable code: String) : TopicResponse {
+        val topic = topicService.getTopic(code)
+        return TopicResponse(topic, topic.products)
     }
 
     @PostMapping
@@ -39,13 +41,21 @@ class TopicController (
         topicService.createTopic(request)
     }
 
-    @PutMapping("/{slug}")
+    @PutMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
     fun updateTopic(
-        @PathVariable slug: String,
+        @PathVariable code: String,
         @RequestBody request: TopicRequest
     ) {
-        topicService.updateTopic(slug, request)
+        val topic = topicService.getTopic(code)
+        topicService.updateTopic(topic, request)
+    }
+
+    @DeleteMapping("/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteTopic(@PathVariable code: String) {
+        val topic = topicService.getTopic(code)
+        topicService.deleteTopic(topic)
     }
 
 }

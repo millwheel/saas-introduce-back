@@ -11,7 +11,7 @@ class Topic(
     val id: Long = 0,
 
     @Column(nullable = false, unique = true)
-    var slug: String,
+    var code: String,
 
     @Column(nullable = false, unique = true)
     var name: String,
@@ -24,13 +24,13 @@ class Topic(
 
 ) {
     constructor(request: TopicRequest): this (
-        slug = request.slug,
+        code = request.code,
         name = request.name,
         emoji = request.emoji
     )
 
     fun update(request: TopicRequest) {
-        slug = request.slug
+        code = request.code
         name = request.name
         emoji = request.emoji
     }
