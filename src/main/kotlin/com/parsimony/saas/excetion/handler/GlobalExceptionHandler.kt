@@ -3,7 +3,6 @@ package com.parsimony.saas.excetion.handler
 import com.parsimony.saas.excetion.custom.ConflictException
 import com.parsimony.saas.excetion.custom.DataNotFoundException
 import com.parsimony.saas.excetion.custom.InvalidInputException
-import com.parsimony.saas.util.rootCause
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
