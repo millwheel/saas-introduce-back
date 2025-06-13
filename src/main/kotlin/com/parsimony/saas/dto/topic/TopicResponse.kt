@@ -14,7 +14,7 @@ data class TopicResponse (
     constructor(topic: Topic, products: MutableSet<Product>) : this(
         id = topic.id,
         name = topic.name,
-        slug = topic.slug,
+        slug = topic.code,
         emoji = topic.emoji,
         products = products.map { TopicProductResponse(it) }
     )
