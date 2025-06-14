@@ -17,9 +17,9 @@ class ProductService (
     private val productViewStatisticRepository: ProductViewStatisticRepository
 ) {
 
-    fun getProduct(slug: String): Product {
-        return productRepository.findBySlug(slug)
-            .orThrowNotFound("product", "slug", slug)
+    fun getProduct(code: String): Product {
+        return productRepository.findByCode(code)
+            .orThrowNotFound("product", "code", code)
     }
 
     @Transactional
@@ -32,16 +32,16 @@ class ProductService (
 
 
     @Transactional
-    fun updateProduct(slug: String, productRequest: ProductRequest) {
-        val product = productRepository.findBySlug(slug)
-            .orThrowNotFound("product", "slug", slug)
+    fun updateProduct(code: String, productRequest: ProductRequest) {
+        val product = productRepository.findByCode(code)
+            .orThrowNotFound("product", "code", code)
         product.update(productRequest)
     }
 
     @Transactional
-    fun deleteProduct(slug: String) {
-        val product = productRepository.findBySlug(slug)
-            .orThrowNotFound("product", "slug", slug)
+    fun deleteProduct(code: String) {
+        val product = productRepository.findByCode(code)
+            .orThrowNotFound("product", "code", code)
         productRepository.delete(product)
     }
 

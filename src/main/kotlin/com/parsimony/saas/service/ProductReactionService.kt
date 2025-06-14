@@ -19,9 +19,9 @@ class ProductReactionService (
 ) {
 
     @Transactional
-    fun createReaction(slug: String, userId: String, reactionType: ReactionType) {
-        val product = productRepository.findBySlug(slug)
-            .orThrowNotFound("product", "slug", slug)
+    fun createReaction(code: String, userId: String, reactionType: ReactionType) {
+        val product = productRepository.findByCode(code)
+            .orThrowNotFound("product", "code", code)
         val user = userRepository.findById(userId)
             .orThrowNotFound("user", "userId", userId)
         if (productReactionRepository.existsByProductAndUser(product, user)) {
@@ -32,9 +32,9 @@ class ProductReactionService (
     }
 
     @Transactional
-    fun deleteReaction(slug: String, userId: String) {
-        val product = productRepository.findBySlug(slug)
-            .orThrowNotFound("product", "slug", slug)
+    fun deleteReaction(code: String, userId: String) {
+        val product = productRepository.findByCode(code)
+            .orThrowNotFound("product", "code", code)
         val user = userRepository.findById(userId)
             .orThrowNotFound("user", "userId", userId)
         productReactionRepository.deleteByProductAndUser(product, user)

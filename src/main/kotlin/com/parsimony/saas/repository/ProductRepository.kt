@@ -7,8 +7,6 @@ import java.util.Optional
 
 interface ProductRepository : JpaRepository<Product, Long> {
 
-    fun findBySlug(slug: String): Optional<Product>
-
-    fun findByTopicsContaining(topic: Topic): List<Product>
+    fun findByCode(code: String): Optional<Product>
 
 }

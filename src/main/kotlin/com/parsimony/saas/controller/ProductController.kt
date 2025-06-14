@@ -29,14 +29,14 @@ class ProductController (
     private val productViewService: ProductViewService
 ) {
 
-    @GetMapping("/{slug}")
+    @GetMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
-    fun getProduct(@PathVariable slug: String,
+    fun getProduct(@PathVariable code: String,
                    @RequestAttribute userId: String,
                    httpServletRequest: HttpServletRequest): ProductResponse {
         val ipAddress = getClientIpAddress(httpServletRequest)
         val userAgent = getUserAgent(httpServletRequest)
-        val product = productService.getProduct(slug)
+        val product = productService.getProduct(code)
         productViewService.saveView(product, userId, ipAddress, userAgent)
         val productViewStatistic = productViewService.getProductViewStatistic(product)
         return ProductResponse(product, productViewStatistic)
@@ -48,46 +48,46 @@ class ProductController (
         productService.createProduct(productRequest)
     }
 
-    @PutMapping("/{slug}")
+    @PutMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
     fun updateProduct(
-        @PathVariable slug: String,
+        @PathVariable code: String,
         @RequestBody productRequest: ProductRequest
     ){
-        productService.updateProduct(slug, productRequest)
+        productService.updateProduct(code, productRequest)
     }
 
-    @DeleteMapping("/{slug}")
+    @DeleteMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
-    fun deleteProduct(@PathVariable slug: String) {
-        productService.deleteProduct(slug)
+    fun deleteProduct(@PathVariable code: String) {
+        productService.deleteProduct(code)
     }
 
-    @PostMapping("/{slug}/like")
+    @PostMapping("/{code}/like")
     @ResponseStatus(HttpStatus.CREATED)
     fun createLikeReaction(
-        @PathVariable slug: String,
+        @PathVariable code: String,
         @RequestAttribute userId: String
     ) {
-        productReactionService.createReaction(slug, userId, ReactionType.LIKE)
+        productReactionService.createReaction(code, userId, ReactionType.LIKE)
     }
 
-    @PostMapping("/{slug}/dislike")
+    @PostMapping("/{code}/dislike")
     @ResponseStatus(HttpStatus.CREATED)
     fun createDislikeReaction(
-        @PathVariable slug: String,
+        @PathVariable code: String,
         @RequestAttribute userId: String
     ) {
-        productReactionService.createReaction(slug, userId, ReactionType.DISLIKE)
+        productReactionService.createReaction(code, userId, ReactionType.DISLIKE)
     }
 
-    @DeleteMapping("/{slug}/reactions")
+    @DeleteMapping("/{code}/reactions")
     @ResponseStatus(HttpStatus.CREATED)
     fun deleteReaction(
-        @PathVariable slug: String,
+        @PathVariable code: String,
         @RequestAttribute userId: String
     ) {
-        productReactionService.deleteReaction(slug, userId)
+        productReactionService.deleteReaction(code, userId)
     }
 
 }

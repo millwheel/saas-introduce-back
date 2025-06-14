@@ -12,7 +12,7 @@ class Product(
     val id: Long = 0,
 
     @Column(nullable = false, unique = true)
-    var slug: String,
+    var code: String,
 
     @Column(nullable = false, unique = true)
     var name: String,
@@ -37,7 +37,7 @@ class Product(
 
 ) {
     constructor(productRequest: ProductRequest): this (
-        slug = productRequest.slug,
+        code = productRequest.code,
         name = productRequest.name,
         summary = productRequest.summary,
         description = productRequest.description,
@@ -45,7 +45,7 @@ class Product(
     )
 
     fun update(productRequest: ProductRequest) {
-        slug = productRequest.slug
+        code = productRequest.code
         name = productRequest.name
         summary = productRequest.summary
         description = productRequest.description
