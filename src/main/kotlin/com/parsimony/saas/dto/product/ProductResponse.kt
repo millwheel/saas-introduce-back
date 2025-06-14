@@ -11,7 +11,7 @@ data class ProductResponse(
     val summary: String,
     val description: String,
     val websiteUrl: String,
-    val createAt: LocalDateTime,
+    val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
     val totalViews: Int,
 ) {
@@ -22,7 +22,7 @@ data class ProductResponse(
         summary = product.summary,
         description = product.description,
         websiteUrl = product.websiteUrl,
-        createAt = product.createdAt,
+        createdAt = product.createdAt,
         updatedAt = product.updatedAt,
         totalViews = productViewStatistic.totalViews
     )
