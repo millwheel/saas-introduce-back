@@ -28,10 +28,10 @@ class TopicController (
         return topics.map { TopicSummaryResponse(it) }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
-    fun getTopic(@PathVariable id: Long) : TopicResponse {
-        val topic = topicService.getTopic(id)
+    fun getTopic(@PathVariable code: String) : TopicResponse {
+        val topic = topicService.getTopic(code)
         return TopicResponse(topic, topic.products)
     }
 
@@ -41,20 +41,20 @@ class TopicController (
         topicService.createTopic(request)
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
     fun updateTopic(
-        @PathVariable id: Long,
+        @PathVariable code: String,
         @RequestBody request: TopicRequest
     ) {
-        val topic = topicService.getTopic(id)
+        val topic = topicService.getTopic(code)
         topicService.updateTopic(topic, request)
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{code}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun deleteTopic(@PathVariable id: Long) {
-        val topic = topicService.getTopic(id)
+    fun deleteTopic(@PathVariable code: String) {
+        val topic = topicService.getTopic(code)
         topicService.deleteTopic(topic)
     }
 

@@ -21,9 +21,9 @@ class TopicService (
         return topicRepository.findAllQueryModel();
     }
 
-    fun getTopic(id: Long): Topic {
-        return topicRepository.findById(id)
-            .orThrowNotFound("topic", "id", id)
+    fun getTopic(code: String): Topic {
+        return topicRepository.findByCode(code)
+            .orThrowNotFound("topic", "code", code)
     }
 
     @Transactional
