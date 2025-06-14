@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 data class ProductResponse(
     val id: Long,
-    val slug: String,
+    val code: String,
     val name: String,
     val summary: String,
     val description: String,
@@ -17,7 +17,7 @@ data class ProductResponse(
 ) {
     constructor(product: Product, productViewStatistic: ProductViewStatistic) : this(
         id = product.id,
-        slug = product.slug,
+        code = product.code,
         name = product.name,
         summary = product.summary,
         description = product.description,
