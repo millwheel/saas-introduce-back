@@ -5,13 +5,13 @@ import com.parsimony.saas.entity.TopicQueryModel
 data class TopicSummaryResponse (
     val id: Long,
     val name: String,
-    val slug: String,
+    val code: String,
     val productCount: Long
 ) {
     constructor(topic: TopicQueryModel) : this (
         id = topic.id,
         name = topic.name,
-        slug = topic.slug,
+        code = topic.code,
         productCount = topic.productCount
     )
 }
