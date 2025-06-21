@@ -3,6 +3,7 @@ package com.parsimony.saas.service
 import com.parsimony.saas.dto.product.ProductRequest
 import com.parsimony.saas.entity.Product
 import com.parsimony.saas.entity.ProductViewStatistic
+import com.parsimony.saas.excetion.custom.InvalidInputException
 import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.ProductViewStatisticRepository
 import com.parsimony.saas.repository.TopicRepository
@@ -26,6 +27,9 @@ class ProductService (
 
     @Transactional
     fun createProduct(productRequest: ProductRequest) {
+        if (productRequest.topicIds.isEmpty()) {
+            throw InvalidInputException("topic ids should not be empty")
+        }
         val topics = topicRepository.findByIdIn(productRequest.topicIds)
         val product = Product(productRequest, topics)
         productRepository.save(product)

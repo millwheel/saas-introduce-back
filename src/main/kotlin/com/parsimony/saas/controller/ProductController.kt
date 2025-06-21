@@ -9,6 +9,7 @@ import com.parsimony.saas.service.ProductViewService
 import com.parsimony.saas.util.getClientIpAddress
 import com.parsimony.saas.util.getUserAgent
 import jakarta.servlet.http.HttpServletRequest
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -45,7 +46,7 @@ class ProductController (
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createProduct(@RequestBody productRequest: ProductRequest) {
+    fun createProduct(@Valid @RequestBody productRequest: ProductRequest) {
         productService.createProduct(productRequest)
     }
 
