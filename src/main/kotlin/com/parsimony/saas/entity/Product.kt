@@ -33,15 +33,16 @@ class Product(
         joinColumns = [JoinColumn(name = "product_id")],
         inverseJoinColumns = [JoinColumn(name = "topic_id")]
     )
-    val topics: MutableSet<Topic> = mutableSetOf()
+    var topics: MutableSet<Topic>
 
 ) {
-    constructor(productRequest: ProductRequest): this (
+    constructor(productRequest: ProductRequest, topics: MutableSet<Topic>): this (
         code = productRequest.code,
         name = productRequest.name,
         summary = productRequest.summary,
         description = productRequest.description,
-        websiteUrl = productRequest.websiteUrl
+        websiteUrl = productRequest.websiteUrl,
+        topics = topics
     )
 
     fun update(productRequest: ProductRequest) {
@@ -51,5 +52,9 @@ class Product(
         description = productRequest.description
         websiteUrl = productRequest.websiteUrl
         updatedAt = LocalDateTime.now()
+    }
+
+    fun updateTopics(topics: MutableSet<Topic>) {
+        this.topics = topics
     }
 }

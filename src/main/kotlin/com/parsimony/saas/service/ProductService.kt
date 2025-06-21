@@ -5,6 +5,7 @@ import com.parsimony.saas.entity.Product
 import com.parsimony.saas.entity.ProductViewStatistic
 import com.parsimony.saas.repository.ProductRepository
 import com.parsimony.saas.repository.ProductViewStatisticRepository
+import com.parsimony.saas.repository.TopicRepository
 import com.parsimony.saas.util.orThrowNotFound
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class ProductService (
+    private val topicRepository: TopicRepository,
     private val productRepository: ProductRepository,
     private val productViewStatisticRepository: ProductViewStatisticRepository
 ) {
@@ -24,12 +26,12 @@ class ProductService (
 
     @Transactional
     fun createProduct(productRequest: ProductRequest) {
-        val product = Product(productRequest)
+        val topics = topicRepository.findByIdIn(productRequest.topicIds)
+        val product = Product(productRequest, topics)
         productRepository.save(product)
         val statistic = ProductViewStatistic(product = product)
         productViewStatisticRepository.save(statistic)
     }
-
 
     @Transactional
     fun updateProduct(id: Long, productRequest: ProductRequest) {

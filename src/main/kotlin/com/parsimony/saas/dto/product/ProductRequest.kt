@@ -6,4 +6,5 @@ data class ProductRequest (
     val summary: String,
     val description: String,
     val websiteUrl: String,
+    val topicIds : List<Long>
 )

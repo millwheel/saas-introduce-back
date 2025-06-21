@@ -45,7 +45,7 @@ class ProductController (
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createProduct(@RequestParam("topic-id") topicId: Long,  @RequestBody productRequest: ProductRequest) {
+    fun createProduct(@RequestBody productRequest: ProductRequest) {
         productService.createProduct(productRequest)
     }
 

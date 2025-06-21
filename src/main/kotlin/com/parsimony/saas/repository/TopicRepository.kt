@@ -4,7 +4,6 @@ import com.parsimony.saas.entity.Topic
 import com.parsimony.saas.entity.TopicQueryModel
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import java.util.Optional
 
 interface TopicRepository : JpaRepository<Topic, Long> {
 
@@ -18,7 +17,7 @@ interface TopicRepository : JpaRepository<Topic, Long> {
     """)
     fun findAllQueryModel(): List<TopicQueryModel>
 
-    fun findByCode(code: String): Optional<Topic>
+    fun findByIdIn(ids: List<Long>): MutableSet<Topic>
     fun existsByCode(code: String): Boolean
     fun existsByName(name: String): Boolean
 }
