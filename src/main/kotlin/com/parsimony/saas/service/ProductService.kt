@@ -44,6 +44,9 @@ class ProductService (
     fun deleteProduct(id: Long) {
         val product = productRepository.findById(id)
             .orThrowNotFound("product", "id", id)
+        val productViewStatistic = productViewStatisticRepository.findByProduct(product)
+            .orThrowNotFound("product view statistic")
+        productViewStatisticRepository.delete(productViewStatistic)
         productRepository.delete(product)
     }
 

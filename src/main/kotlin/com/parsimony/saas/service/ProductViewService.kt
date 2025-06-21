@@ -46,7 +46,8 @@ class ProductViewService (
     fun saveView(product: Product, userId: String?, ipAddress: String, userAgent: String) {
         try {
             val viewLog = ProductViewLog(
-                product = product,
+                productId = product.id,
+                productName = product.name,
                 userId = userId,
                 ipAddress = ipAddress,
                 userAgent = userAgent
