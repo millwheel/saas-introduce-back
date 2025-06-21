@@ -32,8 +32,8 @@ class ProductController (
     @GetMapping("/{code}")
     @ResponseStatus(HttpStatus.OK)
     fun getProduct(@PathVariable code: String,
-                   @RequestAttribute userId: String,
-                   httpServletRequest: HttpServletRequest): ProductResponse {
+                        @RequestAttribute userId: String?,
+                        httpServletRequest: HttpServletRequest): ProductResponse {
         val ipAddress = getClientIpAddress(httpServletRequest)
         val userAgent = getUserAgent(httpServletRequest)
         val product = productService.getProduct(code)
