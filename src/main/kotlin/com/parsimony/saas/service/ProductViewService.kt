@@ -76,9 +76,9 @@ class ProductViewService (
             val allProducts = productRepository.findAll()
 
             allProducts.forEach { product ->
-                val last7DaysCount = productViewLogRepository.countByProductAndViewedAtAfter(product, last7DaysBefore)
+                val last7DaysCount = productViewLogRepository.countByProductIdAndViewedAtAfter(product.id, last7DaysBefore)
 
-                val last30DaysCount = productViewLogRepository.countByProductAndViewedAtAfter(product, last30DaysBefore)
+                val last30DaysCount = productViewLogRepository.countByProductIdAndViewedAtAfter(product.id, last30DaysBefore)
 
                 val stats = productViewStatisticRepository.findByProduct(product)
                     .orElse(ProductViewStatistic(product = product))

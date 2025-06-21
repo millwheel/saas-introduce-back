@@ -7,6 +7,6 @@ import java.time.LocalDateTime
 
 interface ProductViewLogRepository : JpaRepository<ProductViewLog, Long> {
 
-    fun countByProductAndViewedAtAfter(product: Product, startDateTime: LocalDateTime): Int
+    fun countByProductIdAndViewedAtAfter(productId: Long, startDateTime: LocalDateTime): Int
 
 }
