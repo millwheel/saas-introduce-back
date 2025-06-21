@@ -1,7 +1,6 @@
 package com.parsimony.saas.service
 
 import com.parsimony.saas.dto.topic.TopicRequest
-import com.parsimony.saas.dto.topic.TopicResponse
 import com.parsimony.saas.entity.Topic
 import com.parsimony.saas.entity.TopicQueryModel
 import com.parsimony.saas.excetion.custom.ConflictException
@@ -18,12 +17,12 @@ class TopicService (
 ){
 
     fun getTopics() : List<TopicQueryModel> {
-        return topicRepository.findAllQueryModel();
+        return topicRepository.findAllQueryModel()
     }
 
-    fun getTopic(code: String): Topic {
-        return topicRepository.findByCode(code)
-            .orThrowNotFound("topic", "code", code)
+    fun getTopic(id: Long): Topic {
+        return topicRepository.findById(id)
+            .orThrowNotFound("topic", "id", id)
     }
 
     @Transactional
