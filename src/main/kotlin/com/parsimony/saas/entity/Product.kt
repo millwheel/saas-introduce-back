@@ -1,6 +1,7 @@
 package com.parsimony.saas.entity
 
 import com.parsimony.saas.dto.product.ProductRequest
+import com.parsimony.saas.excetion.custom.InvalidInputException
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -37,20 +38,20 @@ class Product(
 
 ) {
     constructor(productRequest: ProductRequest, topics: MutableSet<Topic>): this (
-        code = productRequest.code,
-        name = productRequest.name,
+        code = productRequest.code ?: throw InvalidInputException("code should not be null"),
+        name = productRequest.name ?: throw InvalidInputException("name should not be null"),
         summary = productRequest.summary,
         description = productRequest.description,
-        websiteUrl = productRequest.websiteUrl,
+        websiteUrl = productRequest.websiteUrl ?: throw InvalidInputException("websiteUrl should not be null"),
         topics = topics
     )
 
     fun update(productRequest: ProductRequest) {
-        code = productRequest.code
-        name = productRequest.name
+        code = productRequest.code ?: throw InvalidInputException("code should not be null")
+        name = productRequest.name ?: throw InvalidInputException("name should not be null")
         summary = productRequest.summary
         description = productRequest.description
-        websiteUrl = productRequest.websiteUrl
+        websiteUrl = productRequest.websiteUrl ?: throw InvalidInputException("websiteUrl should not be null")
         updatedAt = LocalDateTime.now()
     }
 
