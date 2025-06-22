@@ -17,9 +17,9 @@ class Product(
     @Column(nullable = false, unique = true)
     var name: String,
 
-    var summary: String,
+    var summary: String?,
 
-    var description: String,
+    var description: String?,
 
     var websiteUrl: String,
 

@@ -6,7 +6,7 @@ data class TopicProductResponse(
     val id: Long,
     val name: String,
     val code: String,
-    val summary: String
+    val summary: String?
 ) {
     constructor(product: Product): this(
         id = product.id,

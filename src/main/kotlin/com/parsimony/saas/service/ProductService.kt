@@ -27,7 +27,7 @@ class ProductService (
 
     @Transactional
     fun createProduct(productRequest: ProductRequest) {
-        if (productRequest.topicIds.isEmpty()) {
+        if (productRequest.topicIds == null || productRequest.topicIds.isEmpty()) {
             throw InvalidInputException("topic ids should not be empty")
         }
         val topics = topicRepository.findByIdIn(productRequest.topicIds)

@@ -4,14 +4,17 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 
 data class ProductRequest(
-    @NotBlank
+    @field:NotBlank
     val code: String,
-    @NotBlank
+
+    @field:NotBlank
     val name: String,
-    val summary: String,
-    val description: String,
-    @NotBlank
+
+    val summary: String?,
+    val description: String?,
+
+    @field:NotBlank
     val websiteUrl: String,
-    @NotEmpty
-    val topicIds: List<Long>
+
+    val topicIds: List<Long>?
 )
